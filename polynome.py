@@ -6,12 +6,12 @@ class Polynome:
         self.list = list
         self.rep = rep
 
-    def plus(self, aa, d):
+    def plus(self, a, d):
         try:
-            self.list[d] += aa
+            self.list[d] += a
         except:
             self.list = self.list + [0]*(d - len(self.list) + 1)
-            self.list[d] += aa
+            self.list[d] += a
         aa = a
         if self.rep != '' and aa != 0:
             if aa < 0:
