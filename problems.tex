@@ -1,0 +1,44 @@
+\documentclass[20pt,a4paper]{book}
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage {fullpage}
+\usepackage {amsmath}
+\usepackage {amsfonts}
+\usepackage {amsthm}
+\usepackage {amssymb}
+%\usepackage {color}
+%\usepackage {pgf}
+%\usepackage {tikz}
+%\usepackage {wrapfig}
+\usepackage{makeidx}
+%\usepackage{fancyhdr}
+\usepackage{enumitem}
+%\usepackage{lipsum}
+\usepackage[pdftex,bookmarks,colorlinks]{hyperref}
+\makeindex
+
+\begin{document}
+\begin{otherlanguage*}{russian}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+%\newtheorem{theorem}{Theorem}[chapter]
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{lemma}{Lemma}[chapter]
+%\newcounter{quoter}
+%\newtheorem{proposition}{Proposition}[chapter]
+%\theoremstyle{remark} \newtheorem{remark}{Remark}
+%\theoremstyle{definition} \newtheorem{definition}{Definition}[chapter]
+\renewcommand{\chaptername}{Серия}
+%\renewcommand{\partname}{Часть}
+
+\setcounter{chapter}{3}
+
+\chapter{Добавка}\begin{enumerate}
+\item $-x^2(-x - 1)(-x^2 - 1)(-1 - x)$;
+\item $-x(-x - x^2)(-x^2 - x)(-x^2 - 1)$;
+\item $-x(-1 - x^2)(-1 - x)(-x^2 - 1)$;
+\item $-x^2(-1 - x^2)(-x^2 - x)(-x^2 - x)$;
+\item $(-1 - x)(-x^2 - x)(-x - x^2)(-1 - x)$;
+\end{enumerate}
+\end{otherlanguage*}
+\end{document}
