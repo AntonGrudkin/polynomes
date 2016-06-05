@@ -13,7 +13,7 @@ def genpoly(sum_count=10, deg=5, cof=10, min_count=1):
     """Generation of simple polynome with sum_count summands, maximal degree of variate of deg, radius of
     coefficients of cof, and minimal count of summands of min_count"""
 
-    p = polynome([0], '')
+    p = Polynome([0], '')
     d_prev = -1
     while p.length < min_count:
         p.reset()
@@ -50,17 +50,17 @@ def polymult(count=10, mult_sum_count=3, mult_count=2, sum_count=2, deg=3, cof=1
 
     s = enumi_beg
     ans = enumi_beg
-    result = polynome([0], '')
+    result = Polynome([0], '')
 
     for i in range(count):
         s += item_beg
         ans += item_beg
         result.reset()
-        mult = polynome([1], '')
+        mult = Polynome([1], '')
         for j in range(mult_sum_count):
             mult.reset()
             mult.plus(1, 0)
-            chance = mult_count #int(randrange(mult_count*100)/100) + 1
+            chance = mult_count # int(randrange(mult_count*100)/100) + 1
             for k in range(chance):
                 if k > 0:
                     p = genpoly(sum_count, deg, cof, 2)
@@ -86,4 +86,4 @@ def polymult(count=10, mult_sum_count=3, mult_count=2, sum_count=2, deg=3, cof=1
     s += enumi_end
     ans += enumi_end
 
-    return s,ans
+    return s, ans
