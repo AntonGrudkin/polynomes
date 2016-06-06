@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter.messagebox import showinfo
 from polygen import *
+import os
+import subprocess
 
 __author__ = 'Anton Grudkin'
 
@@ -23,7 +25,7 @@ def ground_writer():
     answers.write(ground)
 
 
-def polygen_writer(count = 10, sum_count = 5, deg = 4, cof = 20):
+def polygen_writer(count=10, sum_count=5, deg=4, cof=20):
     t = polygen(count, sum_count, deg, cof)
     problems.write(t[0])
     answers.write(t[1])
@@ -31,7 +33,21 @@ def polygen_writer(count = 10, sum_count = 5, deg = 4, cof = 20):
 # parameters = [count, sum_count, degree]
 
 
-class MyGui(Frame):
+def generate_pdf(filename):
+    cmd = ['pdflatex', '-interaction', 'nonstopmode', filename+'.tex']
+    process = subprocess.Popen(cmd)
+    process.communicate()
+
+    os.unlink(filename+'.aux')
+    os.unlink(filename+'.log')
+
+    return_code = process.returncode
+    if not return_code == 0:
+        os.unlink(filename+'.pdf')
+        raise ValueError('Error {} executing command: {}'.format(return_code, ' '.join(cmd)))
+
+
+class MainGui(Frame):
     def __init__(self, parent=None):
         Frame.__init__(self, parent)
         Label(self, text='Count of tasks:').grid(row=0, column=0)
@@ -56,10 +72,6 @@ class MyGui(Frame):
                         )
                ).grid(row=10, column=0)
         Button(self, text='Close', command=self.quit).grid(row=10, column=1)
-        # self.columnconfigure(0, weight=1)
-        # self.columnconfigure(1, weight=1)
-        # self.rowconfigure(0, weight=1)
-        # self.rowconfigure(1, weight=1)
 
     @staticmethod
     def add(count=10, sum_count=5, deg=4, cof=20):
@@ -75,11 +87,15 @@ head_writer()
 print("Started")
 
 if __name__ == '__main__':
-    window = MyGui()
+    window = MainGui()
     window.pack()
     window.mainloop()
 
 ground_writer()
 problems.close()
 answers.close()
+
+generate_pdf('answers')
+generate_pdf('problems')
+
 print("Finished")
