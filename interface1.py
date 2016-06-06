@@ -21,7 +21,8 @@ def check_output_filename(filename_input):
             break
         except BaseException as err:
             error_code = int(format(err).split(']')[0].split(' ')[1])
-            showinfo(title='popup', message=error_code_message(error_code, filename + ".pdf"))
+            if error_code != 2:
+                showinfo(title='popup', message=error_code_message(error_code, filename + ".pdf"))
             copy += 1
             if copy == 1:
                 filename += '(' + format(copy) + ')'
