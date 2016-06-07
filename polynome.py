@@ -28,7 +28,7 @@ class Polynome:
         if d == 1 and aa != 0:
             self.rep += 'x'
         elif d > 1 and aa != 0:
-            self.rep += 'x^' + str(d)
+            self.rep += 'x^{' + str(d) + '}'
 
     # def max_deg(self):
 
