@@ -26,11 +26,13 @@ def check_output_filename(filename_input):
             else:
                 showinfo(title='Error', message=error_code_message(error_code, filename + ".pdf"))
             copy += 1
+            # print copy
             if copy == 1:
                 filename += '(' + format(copy) + ')'
             else:
-                filename.replace('(' + format(copy - 1) + ')', '(' + format(copy) + ')')
-            print(error_code)
+                filename = filename.replace('(' + format(copy - 1) + ')', '(' + format(copy) + ')')
+                # print filename
+            # print(error_code)
     # print (filename)
     return filename
 
@@ -97,6 +99,7 @@ def generate_pdf(filename_long):
             os.startfile(filename+'.pdf')
 
     os.chdir('../')
+
 
 class MainGui(Frame):
     def __init__(self, parent=None):
