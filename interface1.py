@@ -7,8 +7,8 @@ from error_codes import *
 
 __author__ = 'Anton Grudkin'
 
-head_file = open("tex\head.tex", 'r')
-ground_file = open("tex\ground.tex", 'r')
+head_file = open("tex/head.tex", 'r')
+ground_file = open("tex/ground.tex", 'r')
 
 
 def check_output_filename(filename_input):
@@ -21,21 +21,21 @@ def check_output_filename(filename_input):
             break
         except BaseException as err:
             error_code = int(format(err).split(']')[0].split(' ')[1])
-            if error_code != 2:
-                showinfo(title='popup', message=error_code_message(error_code, filename + ".pdf"))
+            if error_code == 2:
+                break
+            else:
+                showinfo(title='Error', message=error_code_message(error_code, filename + ".pdf"))
             copy += 1
             if copy == 1:
                 filename += '(' + format(copy) + ')'
             else:
                 filename.replace('(' + format(copy - 1) + ')', '(' + format(copy) + ')')
-            if error_code == 2:
-                break
             print(error_code)
     # print (filename)
     return filename
 
-answers_filename = check_output_filename('answers')
-problems_filename = check_output_filename('problems')
+answers_filename = check_output_filename('output/answers')
+problems_filename = check_output_filename('output/problems')
 
 answers = open(answers_filename + '.tex', 'w')
 problems = open(problems_filename + '.tex', 'w')
@@ -63,17 +63,30 @@ def polygen_writer(count=10, sum_count=5, deg=4, cof=20):
 # parameters = [count, sum_count, degree]
 
 
-def generate_pdf(filename):
-
-    # print(filename)
-    cmd = ['pdflatex', '-interaction', 'nonstopmode', filename+'.tex']
+def execute_os(cmd):
+    """int"""
     process = subprocess.Popen(cmd)
     process.communicate()
+    return process.returncode
+
+
+def get_path(filename):
+    """[path: str, filename: str]"""
+    aux = filename.split('/')
+    return ['/'.join(aux[:-1]), aux[-1]]
+
+
+def generate_pdf(filename_long):
+
+    path = get_path(filename_long)[0]
+    filename = get_path(filename_long)[1]
+    os.chdir(path)
+
+    cmd = ['pdflatex', '-interaction', 'nonstopmode', filename+'.tex']
+    return_code = execute_os(cmd)
 
     os.unlink(filename+'.aux')
     os.unlink(filename+'.log')
-
-    return_code = process.returncode
 
     if not return_code == 0:
         os.unlink(filename+'.pdf')
@@ -83,6 +96,7 @@ def generate_pdf(filename):
         if open_files_flag:
             os.startfile(filename+'.pdf')
 
+    os.chdir('../')
 
 class MainGui(Frame):
     def __init__(self, parent=None):
