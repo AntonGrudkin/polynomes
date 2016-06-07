@@ -1,9 +1,15 @@
-from tkinter import *
-from tkinter.messagebox import showinfo
 from file_writer import *
 from os_module import *
+import os
+import subprocess
+from error_codes import *
+from Tkinter import *
+from tkinter.messagebox import showinfo
+import Tkinter as tk
 
 __author__ = 'Anton Grudkin'
+
+flag = False
 
 
 class MainGui(Frame):
@@ -30,8 +36,8 @@ class MainGui(Frame):
         cof.grid(row=3, column=1)
         cof.insert(0, '5')
 
-        flag = Checkbutton(self, text='Open files after closing', variable=open_files_flag)
-        flag.grid(row=4, column=0)
+        self.open_files = BooleanVar(master=self)
+        Checkbutton(self, text='Open files after closing', variable=self.open_files).grid(row=4, column=0)
 
         Button(self, text='Add',
                command=(lambda: self.add(int(count.get()),
@@ -41,13 +47,20 @@ class MainGui(Frame):
                                          )
                         )
                ).grid(row=10, column=0)
-        Button(self, text='Close', command=self.quit).grid(row=10, column=1)
+        Button(self, text='Close', command=(lambda: self.finish())).grid(row=10, column=1)
 
     @staticmethod
     def add(count=10, sum_count=5, deg=4, cof=20):
         showinfo(title='popup', message='Ready!')
         polygen_writer(count, sum_count, deg, cof)
 
+    def finish(self):
+        print 'quit'
+        print str(self.open_files.get())
+        ground_writer()
+        generate_pdf(answers_filename, self.open_files.get())
+        generate_pdf(problems_filename, self.open_files.get())
+        self.quit()
 
 print("Started")
 
@@ -58,11 +71,7 @@ if __name__ == '__main__':
     window.pack()
     window.mainloop()
 
-ground_writer()
 problems.close()
 answers.close()
-
-generate_pdf(answers_filename)
-generate_pdf(problems_filename)
 
 print("Finished")
