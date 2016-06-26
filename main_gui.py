@@ -44,13 +44,13 @@ class MainGui(Frame):
                                          )
                         )
                ).grid(row=10, column=0)
-        Button(self, text='Compile', command=(lambda: self.compile(open_files_flag.get(), False))
+        Button(self, text='Compile', command=(lambda: self.compile(self, open_files_flag.get(), False))
                ).grid(row=10, column=1)
 
-        Button(self, text='Compile and close', command=(lambda: self.compile(open_files_flag.get(), True))
+        Button(self, text='Compile and close', command=(lambda: self.compile(self, open_files_flag.get(), True))
                ).grid(row=11, column=1)
 
-        Button(self, text='Close without compiling', command=(lambda: quit())
+        Button(self, text='Close without compiling', command=(lambda: self.quit())
                ).grid(row=12, column=1)
 
 
@@ -61,7 +61,7 @@ class MainGui(Frame):
 
 
     @staticmethod
-    def compile(open_files_flag=False, close_flag=False):
+    def compile(self, open_files_flag=False, close_flag=False):
         print "gen_close | current direction: " + str(os.getcwd())
         ground_writer()
         problems.close()
@@ -69,7 +69,7 @@ class MainGui(Frame):
         generate_pdf(answers_filename, open_files_flag)
         generate_pdf(problems_filename, open_files_flag)
         if close_flag:
-            quit()
+            self.quit()
 
 
 class IORedirect(MainGui):
@@ -78,12 +78,13 @@ class IORedirect(MainGui):
 
 
 head_writer()
+print("Started")
 
 if __name__ == '__main__':
     window = MainGui()
     window.pack()
     window.mainloop()
-    sys.stdout = IORedirect()
-    print("Started")
+    # sys.stdout = IORedirect()
 
+# sys.stdout = sys.__stdout__
 print("Finished")
