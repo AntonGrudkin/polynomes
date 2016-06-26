@@ -63,6 +63,9 @@ class MainGui(Frame):
     @staticmethod
     def gen_close(open_files_flag=False):
         print "gen_close | current direction: " + str(os.getcwd())
+        ground_writer()
+        problems.close()
+        answers.close()
         generate_pdf(answers_filename, open_files_flag)
         generate_pdf(problems_filename, open_files_flag)
         quit()
@@ -84,11 +87,10 @@ if __name__ == '__main__':
     sys.stdout = IORedirect()
     print("Started")
 
-ground_writer()
-problems.close()
-answers.close()
 
-generate_pdf(answers_filename, True)
-generate_pdf(problems_filename)
+
+
+# generate_pdf(answers_filename, True)
+# generate_pdf(problems_filename, True)
 
 print("Finished, ")
