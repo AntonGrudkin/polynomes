@@ -1,5 +1,3 @@
-from tkinter import *
-from tkinter.messagebox import showinfo
 from file_writer import *
 from os_module import *
 from ScrolledText import *
@@ -55,11 +53,8 @@ class MainGui(Frame):
         Button(self, text='Close without compiling', command=(lambda: quit())
                ).grid(row=12, column=1)
 
-        # Button(self, text='Quit', command=self.quit_pressed()).grid(row=10, column=2)
 
-    # @staticmethod
     def add(self, count=10, sum_count=5, deg=4, cof=20):
-        # showinfo(title='popup', message='Ready!')
         polygen_writer(count, sum_count, deg, cof)
         self.gui_console.insert(INSERT, 'Added!\n')
         print 'Added print'
@@ -82,9 +77,7 @@ class IORedirect(MainGui):
         self.gui_console.insert(INSERT, str)
 
 
-
 head_writer()
-
 
 if __name__ == '__main__':
     window = MainGui()
@@ -93,10 +86,4 @@ if __name__ == '__main__':
     sys.stdout = IORedirect()
     print("Started")
 
-
-
-
-# generate_pdf(answers_filename, True)
-# generate_pdf(problems_filename, True)
-
-print("Finished, ")
+print("Finished")
