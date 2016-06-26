@@ -3,17 +3,24 @@ import subprocess
 from error_codes import *
 from tkinter import *
 from tkinter.messagebox import showinfo
+# import _tr
 
 __author__ = 'Anton Grudkin'
 
-open_files_flag = BooleanVar
+# open_files_flag = BooleanVar
 
 
 def execute_os(cmd):
     """int"""
-    process = subprocess.Popen(cmd)
-    process.communicate()
-    return process.returncode
+    print "execute_os | STARTED"
+    print "execute_os | system output is in the lines"
+    print "=========================================="
+    returncode = subprocess.call(cmd, shell=True)
+    # process.communicate()
+    print "=========================================="
+    print "execute_os | process finished with exit code " + str(returncode)
+    print "execute_os | ENDED"
+    return returncode
 
 
 def get_path(filename):
@@ -48,24 +55,39 @@ def check_output_filename(filename_input):
     return filename
 
 
-def generate_pdf(filename_long):
+def generate_pdf(filename_long, open_files_flag=False):
 
+    print "generate_pdf | open_files_flag = " + str(open_files_flag)
     path = get_path(filename_long)[0]
     filename = get_path(filename_long)[1]
-    os.chdir(path)
+    print "generate_pdf | going to change directory to " + str(path)
+    try:
+        os.chdir(path)
+        print "generate_pdf | SUCCESS, current directory is " + str(os.getcwd())
+    except:
+        print "generate_pdf | FAILED, current directory is " + str(os.getcwd())
 
     cmd = ['pdflatex', '-interaction', 'nonstopmode', filename+'.tex']
+    # cmd = ['dir']
+    print "generate_pdf | going to execute following command in shell=TRUE regime : \n " + str(' '.join(cmd))
+
     return_code = execute_os(cmd)
 
-    os.unlink(filename+'.aux')
-    os.unlink(filename+'.log')
+    if return_code == 0:
+        try:
+            os.unlink(filename+'.aux')
+            os.unlink(filename+'.log')
+            print "generate_pdf | SUCCESS : .aux and .log files deleted successfully"
+        except:
+            print "generate_pdf | FAILED : .aux and .log files deleting failed"
 
-    if not return_code == 0:
-        os.unlink(filename+'.pdf')
-        raise ValueError('Error {} executing command: {}'.format(return_code, ' '.join(cmd)))
-
-    else:
         if open_files_flag:
-            os.startfile(filename+'.pdf')
+            os.startfile(filename + '.pdf')
+    else:
+        # os.unlink(filename+'.pdf')
+        # raise ValueError('Error {} executing command: {}'.format(return_code, ' '.join(cmd)))
+        print "Error occurred while compiling file"
 
     os.chdir('../')
+    print "generate_pdf | SUCCESS, current directory is " + str(os.getcwd())
+    print "generate_pdf | ENDED"
