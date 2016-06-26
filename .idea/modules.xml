@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/polynomes.iml" filepath="$PROJECT_DIR$/.idea/polynomes.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../polynomes/.idea/polynomes.iml" filepath="$PROJECT_DIR$/../polynomes/.idea/polynomes.iml" />
     </modules>
   </component>
 </project>

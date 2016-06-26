@@ -73,8 +73,8 @@ class MainGui(Frame):
 
 
 class IORedirect(MainGui):
-    def write(self, str):
-        self.gui_console.insert(INSERT, str)
+    def write(self, text):
+        self.gui_console.insert(INSERT, text)
 
 
 head_writer()
