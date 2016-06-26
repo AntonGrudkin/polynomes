@@ -9,22 +9,24 @@ class MainGui(Frame):
     def __init__(self, parent=None):
         Frame.__init__(self, parent)
 
-        Label(self, text='Count of tasks:').grid(row=0, column=0)
-        count = Entry(self)
+        Label(self, text='Count of tasks:', justify=LEFT).grid(row=0, column=0, sticky=E)
+        var = StringVar(self)
+        var.set("4")
+        count = Spinbox(self, from_=0, to=10, textvariable=var)
         count.grid(row=0, column=1)
-        count.insert(0, '5')
+        # count.set("5")
 
-        Label(self, text='Count of summands in one task:').grid(row=1, column=0)
+        Label(self, text='Count of summands in one task:', justify=LEFT).grid(row=1, column=0, sticky=E)
         sum_cont = Entry(self)
         sum_cont.grid(row=1, column=1)
         sum_cont.insert(0, '5')
 
-        Label(self, text='Maximal degree:').grid(row=2, column=0)
+        Label(self, text='Maximal degree:').grid(row=2, column=0, sticky=E)
         deg = Entry(self)
         deg.grid(row=2, column=1)
         deg.insert(0, '5')
 
-        Label(self, text='Coefficients dispersion:').grid(row=3, column=0)
+        Label(self, text='Coefficients dispersion:').grid(row=3, column=0, sticky=E)
         cof = Entry(self)
         cof.grid(row=3, column=1)
         cof.insert(0, '5')
@@ -36,22 +38,33 @@ class MainGui(Frame):
         self.gui_console = ScrolledText(self, width=40, height=4)
         self.gui_console.grid(row=5, column=0, columnspan=2, sticky=W+E+N+S)
 
-        Button(self, text='Add',
-               command=(lambda: self.add(int(count.get()),
-                                         int(sum_cont.get()),
-                                         int(deg.get()),
-                                         int(cof.get())
-                                         )
-                        )
-               ).grid(row=10, column=0)
-
         self.menubar = Menu(self)
-        menu = Menu(self.menubar, tearoff=0)
 
-        self.menubar.add_cascade(label='File', underline=1, menu=menu)
-        menu.add_command(label='Compile', command=(lambda: self.compile(self, open_files_flag.get(), False)))
-        menu.add_command(label='Compile and close', command=(lambda: self.compile(self, open_files_flag.get(), True)))
-        menu.add_command(label='Close', command=(lambda: self.quit()), accelerator="Ctrl+Q")
+        file_menu = Menu(self.menubar, tearoff=0)
+        self.menubar.add_cascade(label='File', underline=0, menu=file_menu)
+        file_menu.add_command(label='Compile', underline=6, command=(lambda: self.compile(self, open_files_flag.get(),
+                                                                                          False
+                                                                                          )
+                                                                     )
+                              )
+        file_menu.add_command(label='Compile and close', underline=1,
+                              command=(lambda: self.compile(self,
+                                                            open_files_flag.get(),
+                                                            True
+                                                            )
+                                       )
+                              )
+        file_menu.add_command(label='Close', underline=0, command=(lambda: self.quit()), accelerator="Ctrl+Q")
+
+        edit_menu = Menu(self.menubar, tearoff=0)
+        self.menubar.add_cascade(label='Edit', underline=0, menu=edit_menu)
+        edit_menu.add_command(label='Add', underline=0, command=(lambda: self.add(int(count.get()),
+                                                                                  int(sum_cont.get()),
+                                                                                  int(deg.get()),
+                                                                                  int(cof.get())
+                                                                                  )
+                                                                 )
+                              )
 
         try:
             self.master.config(menu=self.menubar)
@@ -69,13 +82,13 @@ class MainGui(Frame):
         self.gui_console.insert(INSERT, 'Added!\n')
         print 'Added print'
 
-
     @staticmethod
     def compile(self, open_files_flag=False, close_flag=False):
         print "gen_close | current direction: " + str(os.getcwd())
         ground_writer()
         problems.close()
         answers.close()
+        print 'Files closed'
         generate_pdf(answers_filename, open_files_flag)
         generate_pdf(problems_filename, open_files_flag)
         if close_flag:
