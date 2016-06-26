@@ -44,15 +44,25 @@ class MainGui(Frame):
                                          )
                         )
                ).grid(row=10, column=0)
-        Button(self, text='Compile', command=(lambda: self.compile(self, open_files_flag.get(), False))
-               ).grid(row=10, column=1)
 
-        Button(self, text='Compile and close', command=(lambda: self.compile(self, open_files_flag.get(), True))
-               ).grid(row=11, column=1)
+        self.menubar = Menu(self)
+        menu = Menu(self.menubar, tearoff=0)
 
-        Button(self, text='Close without compiling', command=(lambda: self.quit())
-               ).grid(row=12, column=1)
+        self.menubar.add_cascade(label='File', underline=1, menu=menu)
+        menu.add_command(label='Compile', command=(lambda: self.compile(self, open_files_flag.get(), False)))
+        menu.add_command(label='Compile and close', command=(lambda: self.compile(self, open_files_flag.get(), True)))
+        menu.add_command(label='Close', command=(lambda: self.quit()), accelerator="Ctrl+Q")
 
+        try:
+            self.master.config(menu=self.menubar)
+        except AttributeError:
+            self.master.tk.call(self, "config", "-menu", self.menubar)
+
+        self.bind_all("<Control-q>", self.quit_event)
+        self.bind_all("<Control-Shift-q>", self.quit)
+
+    def quit_event(self, event):
+        sys.exit(0)
 
     def add(self, count=10, sum_count=5, deg=4, cof=20):
         polygen_writer(count, sum_count, deg, cof)
