@@ -1,26 +1,26 @@
 from polygen import *
 
-head_file = open("head.tex", 'r')
-ground_file = open("ground.tex", 'r')
+# head_file = open("head.tex", 'r')
+# ground_file = open("ground.tex", 'r')
 
-problems = open("problems.tex", 'w')
-answers = open("answers.tex", 'w')
+# problems = open("problems.tex", 'w')
+# answers = open("answers.tex", 'w')
 
-head = head_file.read()
-problems.write(head)
-answers.write(head)
+# head = head_file.read()
+# problems.write(head)
+# answers.write(head)
 
-t = polymult(5, 1, 4, 2, 3, 1)
+t = polymult(10, 3, 2, 4, 4, 3)
 
-problems.write(t[0])
-answers.write(t[1])
+print t[0]
+print t[1]
 
-ground = ground_file.read()
-problems.write(ground)
-answers.write(ground)
-
-problems.close()
-answers.close()
+# ground = ground_file.read()
+# problems.write(ground)
+# answers.write(ground)
+#
+# problems.close()
+# answers.close()
 
 #p = genpoly()
 #print(p.print_out())

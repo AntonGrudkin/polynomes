@@ -39,10 +39,10 @@ class Polynome:
             if self.list[i] != 0:
                 if self.list[i] > 0 and s != '':
                     s += ' + '
-                if self.list[i] != 1 or i == 0:
+                if self.list[i] != 1 and self.list[i] != -1 or i == 0:
                     s += str(self.list[i])
-                # elif i == 1 and :
-                    # s += str(self.list[i])
+                elif i == -1:
+                    s += ' - '
                 if i > 0:
                     s += 'x'
                 if i > 1:

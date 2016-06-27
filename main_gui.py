@@ -68,7 +68,6 @@ class MainGui(Frame):
                                                                                   )
                                                                  )
                               )
-
         try:
             self.master.config(menu=self.menubar)
         except AttributeError:
