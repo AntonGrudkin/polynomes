@@ -1,6 +1,7 @@
 from file_writer import *
 from os_module import *
 from ScrolledText import *
+# from Tkinter import Tk
 
 __author__ = 'Anton Grudkin'
 
@@ -10,26 +11,28 @@ class MainGui(Frame):
         Frame.__init__(self, parent)
 
         Label(self, text='Count of tasks:', justify=LEFT).grid(row=0, column=0, sticky=E)
-        var = StringVar(self)
-        var.set("4")
-        count = Spinbox(self, from_=0, to=10, textvariable=var)
+        count_var = StringVar(self)
+        count_var.set("5")
+        count = Spinbox(self, from_=0, to=10, textvariable=count_var)
         count.grid(row=0, column=1)
-        # count.set("5")
 
         Label(self, text='Count of summands in one task:', justify=LEFT).grid(row=1, column=0, sticky=E)
-        sum_cont = Entry(self)
+        sum_count_var = StringVar(self)
+        sum_count_var.set("5")
+        sum_cont = Spinbox(self, from_=0, to=10, textvariable=sum_count_var)
         sum_cont.grid(row=1, column=1)
-        sum_cont.insert(0, '5')
 
         Label(self, text='Maximal degree:').grid(row=2, column=0, sticky=E)
-        deg = Entry(self)
+        deg_var = StringVar(self)
+        deg_var.set("5")
+        deg = Spinbox(self, from_=0, to=10, textvariable=deg_var)
         deg.grid(row=2, column=1)
-        deg.insert(0, '5')
 
         Label(self, text='Coefficients dispersion:').grid(row=3, column=0, sticky=E)
-        cof = Entry(self)
+        cof_var = StringVar(self)
+        cof_var.set("5")
+        cof = Spinbox(self, from_=0, to=10, textvariable=cof_var)
         cof.grid(row=3, column=1)
-        cof.insert(0, '5')
 
         open_files_flag = BooleanVar()
         flag = Checkbutton(self, text='Open files after closing', variable=open_files_flag)
@@ -103,8 +106,12 @@ class IORedirect(MainGui):
 head_writer()
 print("Started")
 
+top = Tk()
+top.title('Polynomes')
+top.wm_iconbitmap("ico\\icon2.ico")
+
 if __name__ == '__main__':
-    window = MainGui()
+    window = MainGui(top)
     window.pack()
     window.mainloop()
     # sys.stdout = IORedirect()
