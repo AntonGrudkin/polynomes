@@ -25,8 +25,11 @@ def ground_writer():
     answers.write(ground)
 
 
-def polygen_writer(count=10, sum_count=5, deg=4, cof=20):
+def polygen_writer(title=None, count=10, sum_count=5, deg=4, cof=20):
     t = polygen(count, sum_count, deg, cof)
+    if title is not None:
+        problems.write('\section{' + title + '}')
+        answers.write('\section{' + title + '}')
     problems.write(t[0])
     answers.write(t[1])
 
