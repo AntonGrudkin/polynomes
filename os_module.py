@@ -57,6 +57,7 @@ def check_output_filename(filename_input):
 
 def generate_pdf(filename_long, open_files_flag=False):
 
+    status = 0
     print "generate_pdf | open_files_flag = " + str(open_files_flag)
     path = get_path(filename_long)[0]
     filename = get_path(filename_long)[1]
@@ -66,6 +67,7 @@ def generate_pdf(filename_long, open_files_flag=False):
         print "generate_pdf | SUCCESS, current directory is " + str(os.getcwd())
     except:
         print "generate_pdf | FAILED, current directory is " + str(os.getcwd())
+        status = 1
 
     cmd = ['pdflatex', '-interaction', 'nonstopmode', filename+'.tex']
     # cmd = ['dir']
@@ -80,6 +82,7 @@ def generate_pdf(filename_long, open_files_flag=False):
             print "generate_pdf | SUCCESS : .aux and .log files deleted successfully"
         except:
             print "generate_pdf | FAILED : .aux and .log files deleting failed"
+            status = 1
 
         if open_files_flag:
             os.startfile(filename + '.pdf')
@@ -87,7 +90,9 @@ def generate_pdf(filename_long, open_files_flag=False):
         # os.unlink(filename+'.pdf')
         # raise ValueError('Error {} executing command: {}'.format(return_code, ' '.join(cmd)))
         print "Error occurred while compiling file"
+        status = 1
 
     os.chdir('../')
     print "generate_pdf | SUCCESS, current directory is " + str(os.getcwd())
     print "generate_pdf | ENDED"
+    return status
