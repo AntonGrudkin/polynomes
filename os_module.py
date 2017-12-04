@@ -16,7 +16,6 @@ def execute_os(cmd):
     print "execute_os | system output is in the lines"
     print "=========================================="
     returncode = subprocess.call(cmd, shell=True)
-    # process.communicate()
     print "=========================================="
     print "execute_os | process finished with exit code " + str(returncode)
     print "execute_os | ENDED"

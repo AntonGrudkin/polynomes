@@ -46,7 +46,7 @@ class Polynome:
                 if i > 0:
                     s += 'x'
                 if i > 1:
-                    s += '^' + str(i)
+                    s += '^{' + str(i) + '}'
         return s
 
     def reset(self):
